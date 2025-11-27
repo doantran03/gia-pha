@@ -1,13 +1,17 @@
 import MenuIcon from '@mui/icons-material/Menu';
-import { Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
+import { Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { logout } from "@/features/Auth/userSlice";
 
 function Admin() {
-  const [isLogin, setIsLogin] = useState(false);
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const { current, isLoggedIn } = useSelector((state) => state.user);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -15,6 +19,11 @@ function Admin() {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    handleClose();
+    dispatch(logout());
   };
 
   return (
@@ -38,11 +47,14 @@ function Admin() {
 
         {/* Right Section */}
         <Box>
-          {isLogin ? (
+          {isLoggedIn ? (
             <>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar 
+                    alt={current?.name || 'User'} 
+                    src={current?.avatar || '/static/images/avatar/2.jpg'} 
+                  />
                 </IconButton>
               </Tooltip>
 
@@ -63,22 +75,22 @@ function Admin() {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    handleClose();
-                    setIsLogin(false);
-                  }}
-                >
-                  Logout
-                </MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </>
           ) : (
-            <Link to="/login"  style={{ textDecoration: 'none', color: 'inherit' }}>
-              <Typography variant="h6" sx={{ cursor: 'pointer' }}>
-                Login
-              </Typography>
-            </Link>
+            <Box sx={{ display: 'flex', columnGap: '20px' }}>
+              <Link to="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <Typography variant="h6" sx={{ cursor: 'pointer' }}>
+                  Login
+                </Typography>
+              </Link>
+              <Link to="/register" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <Typography variant="h6" sx={{ cursor: 'pointer' }}>
+                  Register
+                </Typography>
+              </Link>
+            </Box>
           )}
         </Box>
       </Toolbar>
