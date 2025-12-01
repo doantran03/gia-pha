@@ -9,7 +9,7 @@ Sidebar.propTypes = {
 
 function Sidebar({ sidebarOpen }) {
     return (
-        <div className='app-sidebar'>
+        <div className={`app-sidebar ${sidebarOpen ? "open" : ""}`}>
             <Link to="/admin">
                 <div className='sidebar-brand'>
                     <img src={logo} alt="brand" />

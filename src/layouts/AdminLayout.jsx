@@ -1,7 +1,7 @@
+import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import Nav from '../components/layout/admin/Nav';
 import Sidebar from '../components/layout/admin/Sidebar';
-import Content from '../components/layout/admin/Content';
-import { useState } from 'react';
 
 function AdminLayout() {
     const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -15,7 +15,9 @@ function AdminLayout() {
             <Sidebar sidebarOpen={sidebarOpen} />
             <div className='app-wrapper'>
                 <Nav toggleSidebar={toggleSidebar} />
-                <Content />
+                <div className='app-main'>
+                    <Outlet />
+                </div>
             </div>
         </div>
     );
