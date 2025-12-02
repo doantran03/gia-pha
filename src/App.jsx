@@ -1,4 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 import AdminLayout from './layouts/AdminLayout'
 import ViewLayout from './layouts/ViewLayout'
 import RequireAuth from './routes/RequireAuth'
@@ -9,13 +12,18 @@ import Genealogy from './pages/admin/Genealogy'
 
 function App() {
   return (
+    <>
+      {/* ToastContainer chỉ cần khai báo 1 lần */}
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} 
+        newestOnTop={false} closeOnClick pauseOnHover draggable theme="light" />
+
       <Routes>
         {/* View template */}
         <Route path="/" element={<ViewLayout />} />
         
         {/* Auth template */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/dang-nhap" element={<Login />} />
+        <Route path="/dang-ky" element={<Register />} />
 
         {/* Admin template */}
         <Route element={<RequireAuth />}>
@@ -25,6 +33,7 @@ function App() {
             </Route>
         </Route>
       </Routes>
+    </>
   )
 } 
 

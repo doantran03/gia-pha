@@ -1,8 +1,16 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 :root {
   --clr-primary: #003168;
   --clr-accent: #7f0000e0;
   --clr-text: #4a5a6b;
   --clr-border: #dee2e6;
+  --clr-white: #ffffff;
+  --clr-black: #000000;
 }
 
 body {
@@ -23,7 +31,6 @@ body {
   z-index: 100;
   width: 250px;
   height: 100vh;
-  max-height: 100vh;
   background-image: url('@assets/images/bg-sidebar.png');
   background-size: cover;
   background-position: center;
@@ -103,4 +110,62 @@ body {
 .app-main {
   padding: 10px;
   flex-grow: 1;
+}
+
+/**
+* Auth
+*/
+
+.app-auth {
+  padding: 0 4vw;
+  display: flex;
+  row-gap: 30px;
+  align-items: center;
+  flex-direction: column;  
+  height: 100vh;
+  max-height: 100vh;
+  background-image: url('@/assets/images/bglogin.png');
+  background-size: cover;
+  background-position: center;   
+  background-repeat: no-repeat;
+}
+
+.auth-banner {
+  margin-top: 120px;
+}
+
+.auth-banner img {
+  width: auto;
+  max-height: 200px;
+}
+
+
+
+/* 
+* Reponsive
+*/
+
+@media (max-width: 1024px) {
+
+}
+
+@media (max-width: 991px) {
+  .auth-banner .long-left,
+  .auth-banner .long-right {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .app-auth {
+    justify-content: center;
+  }
+
+  .auth-banner {
+    margin-top: 0;
+  }
+
+  .auth-banner .logo {
+    width: 100%;
+  }
 }

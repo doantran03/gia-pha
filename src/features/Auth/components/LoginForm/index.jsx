@@ -1,78 +1,61 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, Checkbox, FormControlLabel, TextField, Typography } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
-import { boolean, object, string } from 'yup';
+import * as yup from 'yup';
 
-const schema = object({
-    username: string().required('Username is required'),
-    password: string().required('Password is required').min(6, 'Password must be at least 6 characters'),
-    remember: boolean(),
+const schema = yup.object({
+    username: yup.string().email('Email không hợp lệ').required('Email là bắt buộc'),
+    password: yup.string().required('Mật khẩu là bắt buộc').min(6, 'Mật khẩu phải có ít nhất 6 ký tự'),
 });
 
 LoginForm.propTypes = {
     onSubmit: PropTypes.func,
 };
 
-function LoginForm(props) {
-    const form = useForm({
-        defaultValues: {
-        username: '',
-        password: '',
-        remember: false,
-        },
+function LoginForm({ onSubmit }) {
+    const { register, handleSubmit, reset, formState: { errors }, } = useForm({
+        defaultValues: { username: '', password: '' },
         resolver: yupResolver(schema),
     });
 
     const handleFormSubmit = (values) => {
-        const { onSubmit } = props;
-
-        if (onSubmit) {
-        onSubmit(values);
-        }
-
-        form.reset();
+        if (onSubmit) onSubmit(values);
+        reset();
     };
 
     return (
-        <Box sx={{ maxWidth: 400, mx: 'auto', mt: 5, p: 3, border: '1px solid #ccc', borderRadius: 2, }} >
-            <Typography variant="h5" mb={2} textAlign="center">
-                Login
+        <Box sx={{ maxWidth: 500, p: 5, backgroundColor: 'var(--clr-white)', mx: 'auto' }}>
+            <Typography mb={1} textAlign="center">
+                Đăng nhập để sử dụng dịch vụ
             </Typography>
 
-            <form onSubmit={form.handleSubmit(handleFormSubmit)}>
+            <form onSubmit={handleSubmit(handleFormSubmit)}>
                 <TextField
+                    label="Email"
+                    {...register('username')}
+                    type="email"
+                    error={!!errors.email}
+                    helperText={errors.email?.message}
                     fullWidth
+                    variant="outlined"
                     margin="normal"
-                    label="Username or Email Address"
-                    {...form.register('username')}
-                    error={!!form.formState.errors.username}
-                    helperText={form.formState.errors.username?.message}
+                    autoFocus
                 />
 
                 <TextField
-                    fullWidth
-                    margin="normal"
-                    label="Password"
+                    label="Mật khẩu"
+                    {...register('password')}
                     type="password"
-                    {...form.register('password')}
-                    error={!!form.formState.errors.password}
-                    helperText={form.formState.errors.password?.message}
+                    error={!!errors.password}
+                    helperText={errors.password?.message}
+                    fullWidth
+                    variant="outlined"
+                    margin="normal"
                 />
 
-                <FormControlLabel
-                    label="Remember Me"
-                    control={
-                        <Checkbox
-                        color="primary"
-                            {...form.register('remember')}
-                            onChange={(e) => form.setValue('remember', e.target.checked)}
-                        />
-                    }
-                />
-
-                <Button type="submit" fullWidth variant="contained" sx={{ mt: 2 }}>
-                    Login
+                <Button type="submit" fullWidth variant="contained" size="large" sx={{ mt: 2 }}>
+                    Đăng nhập
                 </Button>
             </form>
         </Box>

@@ -5,7 +5,7 @@ function RequireAuth() {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   if (!isLoggedIn) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/dang-nhap" replace />;
   }
 
   return <Outlet />;
