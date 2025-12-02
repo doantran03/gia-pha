@@ -1,11 +1,11 @@
 import { Route, Routes } from 'react-router-dom'
 import AdminLayout from './layouts/AdminLayout'
 import ViewLayout from './layouts/ViewLayout'
-import Dashboard from './components/layout/admin/Dashboard'
-import Genealogy from './components/layout/admin/Genealogy'
 import RequireAuth from './routes/RequireAuth'
-import Login from './components/layout/auth/Login'
-import Register from './components/layout/auth/Register'
+import Login from './pages/auth/Login'
+import Register from './pages/auth/Register'
+import Dashboard from './pages/admin/Dashboard'
+import Genealogy from './pages/admin/Genealogy'
 
 function App() {
   return (

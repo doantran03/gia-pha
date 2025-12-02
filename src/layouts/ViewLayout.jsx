@@ -1,6 +1,6 @@
-import Header from '../components/layout/view/Header';
-import Main from '../components/layout/view/Main';
-import Footer from '../components/layout/view/Footer';
+import Header from '../pages/view/Header';
+import Main from '../pages/view/Main';
+import Footer from '../pages/view/Footer';
 
 function ViewLayout() {
     return (

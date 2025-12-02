@@ -2,12 +2,15 @@ import PropTypes from 'prop-types';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Avatar, Box, IconButton, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { logout } from "@/features/Auth/userSlice";
 
 Nav.propTypes = {
     toggleSidebar: PropTypes.func,
 };
 
 function Nav({ toggleSidebar }) {
+    const dispatch = useDispatch();
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handleMenu = (event) => {
@@ -20,7 +23,7 @@ function Nav({ toggleSidebar }) {
 
     const handleLogout = () => {
         handleClose();
-        // dispatch(logout());
+        dispatch(logout());
     };
 
     return (
