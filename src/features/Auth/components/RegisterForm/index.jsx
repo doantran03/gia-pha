@@ -1,13 +1,14 @@
+import PropTypes from 'prop-types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, TextField, Typography } from '@mui/material';
-import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
-import { object, string } from 'yup';
+import { object, ref, string } from 'yup';
+import { Link } from 'react-router-dom';
 
 const schema = object({
-  email: string().required('Email is required').email('Invalid email format'),
-  username: string().required('User Name is required'),
-  password: string().required('Password is required').min(6, 'Password must be at least 6 chars'),
+  email: string().required('Email là bắt buộc').email('Email không hợp lệ'),
+  password: string().required('Mật khẩu là bắt buộc').min(6, 'Mật khẩu phải có ít nhất 6 ký tự'),
+  confirmPassword: string().required('Vui lòng xác nhận mật khẩu của bạn').oneOf([ref('password')], 'Mật khẩu không khớp'),
 });
 
 RegisterForm.propTypes = {
@@ -18,8 +19,8 @@ function RegisterForm(props) {
     const form = useForm({
         defaultValues: {
             email: '',
-            username: '',
             password: '',
+            confirmPassword: '',
         },
         resolver: yupResolver(schema),
     });
@@ -27,17 +28,23 @@ function RegisterForm(props) {
     const handleFormSubmit = ((values) => {
         const { onSubmit } = props;
 
+        const payload = {
+            username: values.email,
+            email: values.email,
+            password: values.password,
+        };
+
         if (onSubmit) {
-            onSubmit(values);
+            onSubmit(payload);
         }
 
         form.reset();
     });
 
     return (
-        <Box sx={{ maxWidth: 400, mx: 'auto', mt: 5, p: 3, border: '1px solid #ccc', borderRadius: 2, }} >
-            <Typography variant="h5" mb={2} textAlign="center">
-                Register
+        <Box sx={{ maxWidth: 500, p: 5, backgroundColor: 'var(--clr-white)', mx: 'auto' }}>
+            <Typography mb={1} textAlign="center">
+                Đăng ký để sử dụng dịch vụ
             </Typography>
 
             <form onSubmit={form.handleSubmit(handleFormSubmit)}>
@@ -53,25 +60,30 @@ function RegisterForm(props) {
                 <TextField
                     fullWidth
                     margin="normal"
-                    label="Username"
-                    {...form.register('username')}
-                    error={!!form.formState.errors.username}
-                    helperText={form.formState.errors.username?.message}
+                    type="password"
+                    label="Mật khẩu"
+                    {...form.register('password')}
+                    error={!!form.formState.errors.password}
+                    helperText={form.formState.errors.password?.message}
                 />
 
                 <TextField
                     fullWidth
                     margin="normal"
                     type="password"
-                    label="Password"
-                    {...form.register('password')}
-                    error={!!form.formState.errors.password}
-                    helperText={form.formState.errors.password?.message}
+                    label="Xác nhận mật khẩu"
+                    {...form.register('confirmPassword')}
+                    error={!!form.formState.errors.confirmPassword}
+                    helperText={form.formState.errors.confirmPassword?.message}
                 />
 
-                <Button type="submit" fullWidth variant="contained" sx={{ mt: 2 }}>
-                    Register
+                <Button type="submit" fullWidth variant="contained" size="large" sx={{ mt: 2 }}>
+                    Đăng ký
                 </Button>
+
+                <Typography mt={3} textAlign="center">
+                    Bạn đã có tài khoản? <Link to="/dang-nhap">Đăng nhập</Link>
+                </Typography>
             </form>
         </Box>
     );

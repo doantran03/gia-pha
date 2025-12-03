@@ -1,16 +1,20 @@
 import LoginForm from '../../features/Auth/components/LoginForm';
-import longLeft from '@assets/images/longleft.png';
-import logo from '@assets/images/GIAPHADAIVIET.png';
-import longRight from '@assets/images/longright.png';
 import { toast } from 'react-toastify'
 import { unwrapResult } from "@reduxjs/toolkit";
 import { login } from "@/features/Auth/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const savedUser = useSelector((state) => state.user.current);
+
+    const defaultValues = {
+        email: savedUser?.email || "",
+        password: "",
+    };
 
     const handleSubmit = async (values) => {
         try {
@@ -28,16 +32,7 @@ function Login() {
     };
 
     return (
-        <div className='app-auth'>
-            <div className='auth-banner'>
-                <img className='long-left' src={longLeft} alt="long left" />
-                <img className='logo' src={logo} alt="logo" />
-                <img className='long-right' src={longRight} alt="long right" />
-            </div>
-            <div className='auth-card'>
-                <LoginForm onSubmit={handleSubmit} />
-            </div>
-        </div>
+        <LoginForm onSubmit={handleSubmit} defaultValues={defaultValues} />
     );
 }
 

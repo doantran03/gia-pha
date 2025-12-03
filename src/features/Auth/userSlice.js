@@ -1,6 +1,12 @@
 import userApi from "@/api/userApi";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+const storedUser = localStorage.getItem("current_user");
+
+const initialState = storedUser
+  ? { current: JSON.parse(storedUser), isLoggedIn: true }
+  : { current: null, isLoggedIn: false };
+
 // Async thunk login
 export const login = createAsyncThunk("user/login", async (payload, { rejectWithValue }) => {
   try {
@@ -42,10 +48,7 @@ export const register = createAsyncThunk("user/register", async (payload, { reje
 
 const userSlice = createSlice({
   name: "user",
-  initialState: {
-    current: null,
-    isLoggedIn: false,
-  },
+  initialState,
   reducers: {
     logout: (state) => {
       state.current = null;
@@ -62,7 +65,6 @@ const userSlice = createSlice({
     });
     builder.addCase(register.fulfilled, (state, action) => {
       state.current = action.payload;
-      state.isLoggedIn = true;
       localStorage.setItem("current_user", JSON.stringify(action.payload));
     });
   },

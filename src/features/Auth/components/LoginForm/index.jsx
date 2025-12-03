@@ -1,8 +1,9 @@
+import * as yup from 'yup';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, TextField, Typography } from '@mui/material';
-import PropTypes from 'prop-types';
-import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
 
 const schema = yup.object({
     username: yup.string().email('Email không hợp lệ').required('Email là bắt buộc'),
@@ -11,11 +12,15 @@ const schema = yup.object({
 
 LoginForm.propTypes = {
     onSubmit: PropTypes.func,
+    defaultValues: PropTypes.shape({
+        username: PropTypes.string,
+        password: PropTypes.string,
+    }),
 };
 
-function LoginForm({ onSubmit }) {
+function LoginForm({ onSubmit, defaultValues }) {
     const { register, handleSubmit, reset, formState: { errors }, } = useForm({
-        defaultValues: { username: '', password: '' },
+        defaultValues: defaultValues || { username: '', password: '' },
         resolver: yupResolver(schema),
     });
 
@@ -35,8 +40,8 @@ function LoginForm({ onSubmit }) {
                     label="Email"
                     {...register('username')}
                     type="email"
-                    error={!!errors.email}
-                    helperText={errors.email?.message}
+                    error={!!errors.username}
+                    helperText={errors.username?.message}
                     fullWidth
                     variant="outlined"
                     margin="normal"
@@ -57,6 +62,10 @@ function LoginForm({ onSubmit }) {
                 <Button type="submit" fullWidth variant="contained" size="large" sx={{ mt: 2 }}>
                     Đăng nhập
                 </Button>
+
+                <Typography mt={3} textAlign="center">
+                    Bạn chưa có tài khoản? <Link to="/dang-ky">Đăng ký</Link>
+                </Typography>
             </form>
         </Box>
     );

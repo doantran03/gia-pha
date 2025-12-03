@@ -9,6 +9,7 @@ import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
 import Dashboard from './pages/admin/Dashboard'
 import Genealogy from './pages/admin/Genealogy'
+import AuthLayout from './layouts/AuthLayout'
 
 function App() {
   return (
@@ -22,8 +23,10 @@ function App() {
         <Route path="/" element={<ViewLayout />} />
         
         {/* Auth template */}
-        <Route path="/dang-nhap" element={<Login />} />
-        <Route path="/dang-ky" element={<Register />} />
+        <Route element={<AuthLayout />}>
+            <Route path="/dang-nhap" element={<Login />} />
+            <Route path="/dang-ky" element={<Register />} />
+        </Route>
 
         {/* Admin template */}
         <Route element={<RequireAuth />}>
