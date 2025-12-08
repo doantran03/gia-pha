@@ -12,7 +12,7 @@ function Login() {
     const savedUser = useSelector((state) => state.user.current);
 
     const defaultValues = {
-        email: savedUser?.email || "",
+        username: savedUser?.email || "",
         password: "",
     };
 

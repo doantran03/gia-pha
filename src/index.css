@@ -112,6 +112,91 @@ body {
   flex-grow: 1;
 }
 
+.app-main__nav {
+  padding: 16px 8px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app-main__nav h2 {
+  margin: 0;
+}
+
+.app-main__content {
+  padding: 16px 8px;
+}
+
+.genealogy-list {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.genealogy-item {
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 .125rem .5rem rgba(0, 0, 0, .04);
+}
+
+.genealogy-item__thumb {
+  padding: 28px;
+}
+
+.genealogy-item__thumb img {
+  width: 100%;
+}
+
+.genealogy-item__content {
+  padding: 20px;
+}
+
+.genealogy-item__title,
+.genealogy-item__members,
+.genealogy-item__generation {
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.genealogy-item__members,
+.genealogy-item__generation {
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+  font-size: 14px;
+}
+
+.genealogy-item__cta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.genealogy-item__links {
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+}
+
+.genealogy-item__links a {
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+  font-size: 14px;
+}
+
+.genealogy-item__btns button {
+  min-width: 0;
+}
+
+.genealogy-item__btns .MuiButton-icon {
+  margin: 0;
+}
+
 /**
 * Auth
 */
@@ -146,13 +231,25 @@ body {
 */
 
 @media (max-width: 1024px) {
-
+  .genealogy-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 991px) {
   .auth-banner .long-left,
   .auth-banner .long-right {
     display: none;
+  }
+
+  .app-sidebar {
+    display: none;
+    width: 0;
+    transform: translateX(-250px);
+  }
+
+  .app-wrapper {
+    margin-left: 0 !important;
   }
 }
 
@@ -167,5 +264,9 @@ body {
 
   .auth-banner .logo {
     width: 100%;
+  }
+
+  .genealogy-list {
+    grid-template-columns: 1fr;
   }
 }

@@ -8,38 +8,40 @@ export const getAllGenealogy = createAsyncThunk("genealogy/getAll", async () => 
     console.log(response);
     
     return response.data;
-  }
-);
+});
 
 // Async thunk create
-export const createGenealogy = createAsyncThunk("genealogy/create", async (data) => {
+export const createGenealogy = createAsyncThunk("genealogy/create", async (data, { rejectWithValue }) => {
+  try {
     const response = await genealogyApi.create(data);
 
-    console.log(response);
-
     return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response?.data?.message);
   }
-);
+});
 
 // Async thunk update
-export const updateGenealogy = createAsyncThunk("genealogy/update", async ({ id, data }) => {
+export const updateGenealogy = createAsyncThunk("genealogy/update", async ({ id, data }, { rejectWithValue }) => {
+  try {
     const response = await genealogyApi.update(id, data);
 
-    console.log(response);
-
     return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response?.data?.message);
   }
-);
+});
 
 // Async thunk delete 
-export const deleteGenealogy = createAsyncThunk("genealogy/delete", async (id) => {
+export const deleteGenealogy = createAsyncThunk("genealogy/delete", async (id, { rejectWithValue }) => {
+  try {
     const response = await genealogyApi.delete(id);
 
-    console.log(response);
-
-    return id;
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response?.data?.message);
   }
-);
+});
 
 const genealogySlice = createSlice({
   name: "genealogy",

@@ -18,7 +18,7 @@ export const login = createAsyncThunk("user/login", async (payload, { rejectWith
 
       return {
         email: response.user_email,
-        nicename: response.user_nicename,
+        nice_name: response.user_nicename,
         display_name: response.user_display_name,
       };
     } catch (error) {
@@ -36,7 +36,6 @@ export const register = createAsyncThunk("user/register", async (payload, { reje
       }
 
       return {
-        id: response.data.id,
         email: response.data.email,
         nicename: response.data.nicename,
         display_name: response.data.display_name,
@@ -65,7 +64,7 @@ const userSlice = createSlice({
     });
     builder.addCase(register.fulfilled, (state, action) => {
       state.current = action.payload;
-      localStorage.setItem("current_user", JSON.stringify(action.payload));
+      // localStorage.setItem("current_user", JSON.stringify(action.payload));
     });
   },
 });
