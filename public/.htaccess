@@ -1,0 +1,10 @@
+RewriteEngine On
+RewriteBase /
+
+# Cho phép truy cập file tĩnh khi tồn tại
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Fallback về index.html cho SPA routes
+RewriteRule ^ index.html [L]
