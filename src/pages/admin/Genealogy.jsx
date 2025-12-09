@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import Link from '@mui/material/Link';
+import Swal from "sweetalert2";
 import Typography from '@mui/material/Typography';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { useState } from 'react';
@@ -18,11 +19,6 @@ function Genealogy() {
     const [open, setOpen] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const [editData, setEditData] = useState(null);
-
-    const handleClick = (event) => {
-        event.preventDefault();
-        console.info('You clicked a breadcrumb.');
-    }
 
     const handleClickOpen = () => {
         setIsEdit(false);
@@ -79,18 +75,43 @@ function Genealogy() {
     };
 
     const handleDeleteSubmit = async (values) => {
-        try {
-            const action = deleteGenealogy(values.id);
-            const resultAction = await dispatch(action);
-            const data = unwrapResult(resultAction);
-            console.log("Genealogy: ", data);
+        Swal.fire({
+            title: "Bạn có chắc chắn?",
+            text: "Bạn sẽ không thể khôi phục lại dữ liệu này!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Xoá ngay",
+            cancelButtonText: "Hủy"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const action = deleteGenealogy(values.id);
+                    const resultAction = await dispatch(action);
+                    const data = unwrapResult(resultAction);
 
-            setOpen(false);
-            toast.success("Xoá gia phả thành công!");
-        } catch (error) {
-            toast.error(error)
-            console.log("Failed to delete Genealogy: ", error);
-        }
+                    console.log("Genealogy Deleted: ", data);
+
+                    setOpen(false);
+
+                    Swal.fire({
+                        title: "Đã xoá!",
+                        text: "Gia phả đã được xoá thành công.",
+                        icon: "success"
+                    });
+
+                } catch (error) {
+                    console.log("Failed to delete Genealogy: ", error);
+
+                    Swal.fire({
+                        title: "Lỗi!",
+                        text: "Xoá không thành công.",
+                        icon: "error"
+                    });
+                }
+            }
+        });
     };
 
     return (
@@ -98,17 +119,13 @@ function Genealogy() {
             <div className='app-main__nav'>
                 <h2>Danh sách gia phả</h2>
 
-                <div role="presentation" onClick={handleClick}>
+                <div role="presentation">
                     <Breadcrumbs aria-label="breadcrumb">
                         <Link underline="hover" color="inherit" href="/">
-                        MUI
+                            MUI
                         </Link>
-                        <Link
-                        underline="hover"
-                        color="inherit"
-                        href="/material-ui/getting-started/installation/"
-                        >
-                        Core
+                        <Link underline="hover" color="inherit" href="/material-ui/getting-started/installation/">
+                            Core
                         </Link>
                         <Typography sx={{ color: 'text.primary' }}>Breadcrumbs</Typography>
                     </Breadcrumbs>

@@ -37,7 +37,9 @@ export const deleteGenealogy = createAsyncThunk("genealogy/delete", async (id, {
   try {
     const response = await genealogyApi.delete(id);
 
-    return response.data;
+    console.log(response);
+
+    return id;
   } catch (error) {
     return rejectWithValue(error.response?.data?.message);
   }
@@ -47,25 +49,14 @@ const genealogySlice = createSlice({
   name: "genealogy",
   initialState: {
     items: [],
-    loading: false, 
-    error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     // get all
     builder
-      .addCase(getAllGenealogy.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
       .addCase(getAllGenealogy.fulfilled, (state, action) => {
-        state.loading = false;
         state.items = action.payload;
       })
-      .addCase(getAllGenealogy.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
-      });
 
     // create
     builder

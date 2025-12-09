@@ -1,6 +1,6 @@
+import 'react-toastify/dist/ReactToastify.css'
 import { Route, Routes } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 
 import AdminLayout from './layouts/AdminLayout'
 import ViewLayout from './layouts/ViewLayout'
@@ -10,11 +10,12 @@ import Register from './pages/auth/Register'
 import Dashboard from './pages/admin/Dashboard'
 import Genealogy from './pages/admin/Genealogy'
 import AuthLayout from './layouts/AuthLayout'
+import Member from './pages/admin/Member'
 
 function App() {
   return (
     <>
-      {/* ToastContainer chỉ cần khai báo 1 lần */}
+      {/* ToastContainer */}
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} 
         newestOnTop={false} closeOnClick pauseOnHover draggable theme="light" />
 
@@ -33,6 +34,7 @@ function App() {
             <Route path="/admin" element={<AdminLayout />}>
                 <Route index element={<Dashboard />} />
                 <Route path="danh-sach-gia-pha" element={<Genealogy />} />
+                <Route path="danh-sach-thanh-vien/:id" element={<Member />} />
             </Route>
         </Route>
       </Routes>
