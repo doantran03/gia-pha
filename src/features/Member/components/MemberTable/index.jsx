@@ -4,10 +4,8 @@ import { DataGrid } from '@mui/x-data-grid';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 
-function MemberTable() {
-    const { id } = useParams();
+function MemberTable({ id }) {
     const dispatch = useDispatch();
     const memberList = useSelector((state) => state.member.items);
 

@@ -20,7 +20,7 @@ function GenealogyItem({ item, onEdit, onDelete }) {
                 <p className='genealogy-item__generation'><AlignHorizontalLeftIcon /> Thế hệ: 2</p>
                 <div className='genealogy-item__cta'>
                     <div className='genealogy-item__links'>
-                        <Link to="#"><AccountTreeIcon fontSize="small" />Chỉnh sửa phả đồ</Link>
+                        <Link to={`/admin/pha-do/${item.id}`}><AccountTreeIcon fontSize="small" />Chỉnh sửa phả đồ</Link>
                         <Link to={`/admin/danh-sach-thanh-vien/${item.id}`}>Danh sách<EastIcon fontSize="small" /></Link>
                     </div>
                     <div className='genealogy-item__btns'>

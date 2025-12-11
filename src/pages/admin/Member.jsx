@@ -1,8 +1,11 @@
 import { Breadcrumbs, Typography } from '@mui/material';
 import MemberTable from '../../features/Member/components/MemberTable';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import MemberTree from '../../features/Member/components/MemberTree';
 
 function Member() {
+    const { id } = useParams();
+    
     return (
         <>
             <div className='app-main__nav'>
@@ -22,7 +25,7 @@ function Member() {
             </div>
 
             <div className='app-main__content'>
-                <MemberTable />
+                <MemberTable id={id} />
             </div>
         </>
     );

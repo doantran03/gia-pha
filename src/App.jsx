@@ -11,6 +11,7 @@ import Dashboard from './pages/admin/Dashboard'
 import Genealogy from './pages/admin/Genealogy'
 import AuthLayout from './layouts/AuthLayout'
 import Member from './pages/admin/Member'
+import MemberTree from './features/Member/components/MemberTree'
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/admin" element={<AdminLayout />}>
                 <Route index element={<Dashboard />} />
                 <Route path="danh-sach-gia-pha" element={<Genealogy />} />
+                <Route path="pha-do/:id" element={<MemberTree />} />
                 <Route path="danh-sach-thanh-vien/:id" element={<Member />} />
             </Route>
         </Route>
